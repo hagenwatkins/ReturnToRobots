@@ -43,15 +43,18 @@ app.get('/all', function(req, res){
   });
 });
 
-app.get('/employed?',function(req, res){
-  db.collection('users').find({}).toArray(function(err, results) {
 
 
-      res.render('all',{users:results})
-  });
-
+app.get('/employed', function(req, res) {
+  db.collection('users').find({ job: { $type: 2 } }).toArray(function(err, results) {
+    res.render('index', { users: results })
+  })
 });
-
+app.get('/unemployed', function(req, res) {
+  db.collection('users').find({ job: { $type: 10 } }).toArray(function(err, results) {
+    res.render('index', { users: results });
+  })
+});
 
 
 let db;
